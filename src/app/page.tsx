@@ -1,11 +1,13 @@
-export default function Home() {
-  const userInput = '<img src="x" onerror="alert(1)" />';
+// app/page.tsx
 
-  // 화면에 문자열 그대로 출력됨 (HTML로 실행되지 않음)
+import { Input } from "@/components/Input";
+
+export default function Home() {
   return (
-    <div>
-      <h1>안녕</h1>
-      <div>{userInput}</div>
+    <div className="flex min-h-screen flex-col items-center justify-center p-4">
+      <div className="w-96">
+        <Input type="text" placeholder="입력하기" />
+      </div>
     </div>
   );
 }
