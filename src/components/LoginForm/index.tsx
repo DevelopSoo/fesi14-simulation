@@ -4,9 +4,10 @@
 
 import { useState } from "react";
 import { Input } from "../Input";
+import { useInputs } from "@/hooks/useInputs";
 
 export const LoginForm = () => {
-  const [values, setValues] = useState({
+  const { values, handleChange, handleDelete } = useInputs({
     email: "",
     password: "",
   });
@@ -36,9 +37,9 @@ export const LoginForm = () => {
     return "";
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setValues((prev) => ({ ...prev, [name]: value }));
+    handleChange(e);
 
     // 입력값 변경 시 유효성 검사
     if (name === "email") {
@@ -49,8 +50,8 @@ export const LoginForm = () => {
     }
   };
 
-  const handleDelete = (field: keyof typeof values) => {
-    setValues((prev) => ({ ...prev, [field]: "" }));
+  const onDelete = (field: keyof typeof values) => {
+    handleDelete(field);
     setErrors((prev) => ({
       ...prev,
       [field]: field === "email" ? validateEmail("") : validatePassword(""),
@@ -98,12 +99,12 @@ export const LoginForm = () => {
             id="email"
             name="email"
             value={values.email}
-            onChange={handleChange}
+            onChange={onChange}
             type="email"
             placeholder="이메일을 입력하세요"
             isError={!!errors.email}
             errorMessage={errors.email}
-            onDelete={() => handleDelete("email")} // X 버튼 클릭 시 이메일 지우기
+            onDelete={() => onDelete("email")} // X 버튼 클릭 시 이메일 지우기
           />
         </div>
         <div>
@@ -114,12 +115,12 @@ export const LoginForm = () => {
             id="password"
             name="password"
             value={values.password}
-            onChange={handleChange}
+            onChange={onChange}
             type="password"
             placeholder="비밀번호를 입력하세요"
             isError={!!errors.password}
             errorMessage={errors.password}
-            onDelete={() => handleDelete("password")} // X 버튼 클릭 시 비밀번호 지우기
+            onDelete={() => onDelete("password")} // X 버튼 클릭 시 비밀번호 지우기
           />
         </div>
         <button
