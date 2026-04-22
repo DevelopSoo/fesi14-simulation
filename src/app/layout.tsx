@@ -1,5 +1,11 @@
+// src/app/layout.tsx
+
+import QueryProvider from "@/providers/QueryProvider";
 import "./globals.css";
-import Header from "@/components/Header";
+import { initMocks } from "@/mocks";
+import { MSWProvider } from "@/providers/MSWProvider";
+
+initMocks();
 
 export default function RootLayout({
   children,
@@ -9,8 +15,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header />
-        {children}
+        <MSWProvider>
+          <h1>프리렌더링 부분</h1>
+          <QueryProvider>{children}</QueryProvider>
+        </MSWProvider>
       </body>
     </html>
   );
