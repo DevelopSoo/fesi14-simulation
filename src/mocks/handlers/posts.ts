@@ -13,7 +13,7 @@ export const postsHandlers = [
     return HttpResponse.json({
       id: Number(params.id),
       title: "첫 번째 게시글",
-      body: "상세 내용",
+      body: "상세 내용 1",
     });
   }),
 ];
