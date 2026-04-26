@@ -1,5 +1,20 @@
 // src/app/page.tsx
 
+"use client";
+
+import { Button } from "@/stories/Button";
+
 export default function Home() {
-  return <h1>게시글 목록</h1>;
+  return (
+    <>
+      <Button
+        label="스토리북 버튼2"
+        primary
+        size="large"
+        onClick={() => {
+          alert("버튼 클릭");
+        }}
+      />
+    </>
+  );
 }
