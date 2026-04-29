@@ -4,17 +4,19 @@ name: Github Actions로 작업 병렬로 실행하기
 on: push
 
 jobs:
-  first_job:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest # 리눅스에서 빌드
     steps:
-      - name: 첫 번째 작업의 1단계
-        run: echo "첫 번째 작업의 첫 번째 단계입니다."
-      - name: 첫 번째 작업의 2단계
-        run: echo "첫 번째 작업의 두 번째 단계입니다."
-      - name: 두 번째 작업의 1단계
-        # 실패하는 작업이라고 가정
-        run: |
-          echo "두 번째 작업의 첫 번째 단계입니다."
-          exit 1
-      - name: 두 번째 작업의 2단계
-        run: echo "두 번째 작업의 두 번째 단계입니다."
+      - run: npm run build
+
+  test_windows:
+    needs: build
+    runs-on: windows-latest # 윈도우에서 테스트
+    steps:
+      - run: npm test
+
+  test_mac:
+    needs: build
+    runs-on: macos-latest # 맥에서도 테스트
+    steps:
+      - run: npm test
