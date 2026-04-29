@@ -7,6 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest # 리눅스에서 빌드
     steps:
+      - run: npm install
       - run: npm run build
 
   test_windows:
