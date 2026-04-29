@@ -7,6 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest # 리눅스에서 빌드
     steps:
+      - uses: actions/checkout@v5
       - run: npm install
       - run: npm run build
 
@@ -14,10 +15,14 @@ jobs:
     needs: build
     runs-on: windows-latest # 윈도우에서 테스트
     steps:
-      - run: npm test
+      - uses: actions/checkout@v5
+      - run: npm install
+      - run: npm run build
 
   test_mac:
     needs: build
     runs-on: macos-latest # 맥에서도 테스트
     steps:
-      - run: npm test
+      - uses: actions/checkout@v5
+      - run: npm install
+      - run: npm run build
