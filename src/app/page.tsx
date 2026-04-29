@@ -12,7 +12,7 @@ export default function Home() {
         primary
         size="large"
         onClick={() => {
-          alert("버튼 클릭");
+          alert("버튼 클릭2");
         }}
       />
     </>
