@@ -1,28 +1,23 @@
 # .github/workflows/actions.yml
 
-name: Github Actions로 작업 병렬로 실행하기
+name: Github Actions로 테스트 자동화하기
 on: push
 
 jobs:
-  build:
-    runs-on: ubuntu-latest # 리눅스에서 빌드
+  test:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - run: npm install
-      - run: npm run build
+      - name: Github Repository 불러오기
+        uses: actions/checkout@v5
 
-  test_windows:
-    needs: build
-    runs-on: windows-latest # 윈도우에서 테스트
-    steps:
-      - uses: actions/checkout@v5
-      - run: npm install
-      - run: npm run build
+      - name: Node.js 설치하기
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: "npm"
 
-  test_mac:
-    needs: build
-    runs-on: macos-latest # 맥에서도 테스트
-    steps:
-      - uses: actions/checkout@v5
-      - run: npm install
-      - run: npm run build
+      - name: 의존성(라이브러리) 설치
+        run: npm ci
+
+      - name: 테스트 실행하기
+        run: npm run test
