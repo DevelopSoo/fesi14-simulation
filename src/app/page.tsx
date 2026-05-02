@@ -1,11 +1,5 @@
 // src/app/page.tsx
 
-'use client';
-
 export default function Home() {
-  return (
-    <>
-      <h1>테스트</h1>
-    </>
-  );
+  return <h1>환경: {process.env.NEXT_PUBLIC_MY_ENVIRONMENT}</h1>;
 }
