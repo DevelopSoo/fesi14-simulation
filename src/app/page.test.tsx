@@ -1,3 +1,10 @@
 // src/app/page.test.tsx
 
-test("실패 테스트", () => {});
+import { render, screen } from "@testing-library/react";
+import Home from "./page";
+
+test(" 테스트", () => {
+  render(<Home />);
+  const element = screen.getByText("테스트");
+  expect(element).toBeInTheDocument();
+});
