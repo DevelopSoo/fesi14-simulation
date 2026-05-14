@@ -17,9 +17,7 @@ jobs:
           cache: 'npm'
 
       - run: npm ci
-
       - run: npm run test
-
       - run: npm install --global vercel@latest
 
       - name: Vercel 환경 정보 가져오기
@@ -29,7 +27,7 @@ jobs:
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: 빌드 결과물 압축
-        run: tar -czvf vercel-output.tar.gz .vercel
+        run: tar -czvf vercel-output.tar.gz .vercel node_modules package.json package-lock.json
 
       - name: 빌드 결과물 업로드
         uses: actions/upload-artifact@v7
