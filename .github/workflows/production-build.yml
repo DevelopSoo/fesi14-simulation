@@ -27,7 +27,9 @@ jobs:
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: 빌드 결과물 압축
-        run: tar -czvf vercel-output.tar.gz .vercel node_modules package.json package-lock.json
+        run: |
+          tar -czvf /tmp/vercel-output.tar.gz --exclude='.git' .
+          mv /tmp/vercel-output.tar.gz vercel-output.tar.gz
 
       - name: 빌드 결과물 업로드
         uses: actions/upload-artifact@v7
