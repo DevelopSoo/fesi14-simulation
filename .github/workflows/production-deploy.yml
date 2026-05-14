@@ -31,7 +31,7 @@ jobs:
         if: ${{ inputs.run_id == '' }}
         uses: dawidd6/action-download-artifact@v6
         with:
-          workflow: build.yml
+          workflow: production-build.yml
           name: vercel-build-output
           path: .vercel
           workflow_conclusion: success
