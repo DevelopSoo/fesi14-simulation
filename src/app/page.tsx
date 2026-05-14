@@ -1,5 +1,11 @@
 // src/app/page.tsx
 
+'use client';
+
 export default function Home() {
-  return <h1>환경: {process.env.NEXT_PUBLIC_MY_ENVIRONMENT} vercel 배포</h1>;
+  return (
+    <div>
+      <h1>자동 빌드 & 수동 배포 테스트</h1>
+    </div>
+  );
 }

@@ -1,0 +1,37 @@
+name: Production 빌드
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+on:
+  push:
+    branches:
+      - main
+jobs:
+  Build-Production:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - run: npm run test
+
+      - run: npm install --global vercel@latest
+
+      - name: Vercel 환경 정보 가져오기
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: 프로젝트 빌드
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: 빌드 결과물 업로드
+        uses: actions/upload-artifact@v7
+        with:
+          name: vercel-build-output
+          path: .vercel
+          retention-days: 7
+          include-hidden-files: true
