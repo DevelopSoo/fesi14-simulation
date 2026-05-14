@@ -13,27 +13,31 @@ jobs:
   Deploy-Production:
     runs-on: ubuntu-latest
     permissions:
-      actions: read # 다른 워크플로우의 artifact 읽기용
+      actions: read
       contents: read
     steps:
       - name: Vercel CLI 설치
         run: npm install --global vercel@latest
+
       - name: 빌드 결과물 다운로드 (특정 Run ID)
         if: ${{ inputs.run_id != '' }}
-        uses: actions/download-artifact@v8
+        uses: dawidd6/action-download-artifact@v6
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           name: vercel-build-output
-          path: .vercel
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          repository: ${{ github.repository }}
-          run-id: ${{ inputs.run_id }}
+          run_id: ${{ inputs.run_id }}
+
       - name: 빌드 결과물 다운로드 (최근 성공 빌드)
         if: ${{ inputs.run_id == '' }}
         uses: dawidd6/action-download-artifact@v6
         with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           workflow: production-build.yml
           name: vercel-build-output
-          path: .vercel
           workflow_conclusion: success
+
+      - name: 빌드 결과물 압축 해제
+        run: tar -xzvf vercel-output.tar.gz
+
       - name: Vercel에 배포
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
